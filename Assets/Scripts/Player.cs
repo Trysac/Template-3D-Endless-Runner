@@ -76,4 +76,9 @@ public class Player : MonoBehaviour
     {
         return limitsXPosition;
     }
+
+    public bool GetIsAlive() 
+    {
+        return IsAlive;
+    }
 }
