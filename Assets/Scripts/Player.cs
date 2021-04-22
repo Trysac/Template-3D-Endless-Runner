@@ -47,7 +47,8 @@ public class Player : MonoBehaviour
             {
                 transform.Translate(horizontalMovement * Time.deltaTime * alternativeMovementMechanicSpeed, 0, 0);
             }
-            else if (Input.GetKeyDown(KeyCode.Space) && IsTochingTheGround)
+            
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
             }
