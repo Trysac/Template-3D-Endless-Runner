@@ -4,31 +4,25 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    [SerializeField] float TravelSpeed;
+    [SerializeField] float travelSpeed = 2f;
+
+    public float TravelSpeed { get; set; }
 
     void Start()
     {
-        
+        TravelSpeed = travelSpeed;
     }
 
     void Update()
     {
-        Move();
+        if (Game_Manager.IsGameActive) 
+        { 
+            Move();
+        }
     }
 
     private void Move() 
-    { 
-        //Move
-    }
-
-    public void StopMoving() 
     {
-        TravelSpeed = 0;
+        transform.Translate(-Vector3.forward * TravelSpeed * Time.deltaTime);
     }
-
-    public void SetTravelSpeed(float speed) 
-    {
-        TravelSpeed = speed;
-    }
-
 }
