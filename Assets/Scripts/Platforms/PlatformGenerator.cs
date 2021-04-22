@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlatformGenerator : MonoBehaviour
 {
     [Header("Genereal Parameters")]
-    [SerializeField] float platformTravelSpeed;
-    [SerializeField] float platformLimitCount;
+    [SerializeField] float platformTravelSpeed = 2;
+    [SerializeField] int platformLimitCount = 4;
 
     [Header("Prefabs")]
-    [SerializeField] GameObject[] basicPlatform;
+    [SerializeField] Platform[] basicPlatform;
     [SerializeField] GameObject[] MediumPlatform;
     [SerializeField] GameObject[] HardPlatform;
     [SerializeField] GameObject[] interceptionPlatform;
@@ -18,28 +18,18 @@ public class PlatformGenerator : MonoBehaviour
 
     void Update()
     {
-        platformsInWorld = FindObjectsOfType<Platform>().Length;
-        if (FindObjectOfType<Player>().IsAlive) 
+        if (Game_Manager.IsGameActive) 
         {
+            platformsInWorld = FindObjectsOfType<Platform>().Length;
             SpawnPlatform();
-        }
-        else 
-        {
-            StopAllPlatforms();
         }
     }
 
     private void SpawnPlatform() 
     {
-        if (platformsInWorld <= platformLimitCount) {return;}
-    }
-
-    private void StopAllPlatforms() 
-    {
-        foreach (Platform platform in FindObjectsOfType<Platform>()) 
-        {
-            platform.StopMoving();
-        }
+        if (platformsInWorld >= platformLimitCount) {return;}
+        Platform platform = Instantiate(basicPlatform[0], new Vector3(0,0,45), Quaternion.identity);
+        platform.TravelSpeed = platformTravelSpeed;
     }
 
 }

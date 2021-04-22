@@ -8,8 +8,11 @@ public class Game_Manager : MonoBehaviour
 
     Vector3 offSet;
 
+    public static bool IsGameActive { get; set; }
+
     void Start()
     {
+        IsGameActive = true;
         offSet = playerPosition.position - transform.position;
     }
 
@@ -20,11 +23,6 @@ public class Game_Manager : MonoBehaviour
             Vector3 cameraPos = new Vector3(transform.position.x, transform.position.y, playerPosition.position.z + - offSet.z);
             transform.position = cameraPos;
         }
-    }
-
-    public void StopCamera() 
-    { 
-        //This methont is not necesary 
     }
 
     public void StartGameOverSecuence() 

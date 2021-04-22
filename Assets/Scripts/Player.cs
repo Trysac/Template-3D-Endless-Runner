@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float jumpingForce = 1f;
-    //[SerializeField] float lateralMovementTransition = 0.5f;
+    [SerializeField] float alternativeMovementMechanicSpeed = 1f;
 
     float[] limitsXPosition = { -2.5f, 2.5f };
    
@@ -29,10 +29,34 @@ public class Player : MonoBehaviour
     {
         if (IsAlive) 
         { 
-            ManageInputs();
+            //ManageInputs();
+            AlternativeMove();
         }   
     }
 
+    private void AlternativeMove() 
+    {
+        if (IsTochingTheGround)
+        {
+            float horizontalMovement = Input.GetAxis("Horizontal");
+            if (horizontalMovement > 0 && transform.position.x < limitsXPosition[1])
+            {
+                transform.Translate(horizontalMovement * Time.deltaTime * alternativeMovementMechanicSpeed, 0,0);
+            }
+            else if (horizontalMovement < 0 && transform.position.x > limitsXPosition[0])
+            {
+                transform.Translate(horizontalMovement * Time.deltaTime * alternativeMovementMechanicSpeed, 0, 0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && IsTochingTheGround)
+            {
+                Jump();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Swept();
+            }
+        }
+    }
 
     private void ManageInputs()
     {
