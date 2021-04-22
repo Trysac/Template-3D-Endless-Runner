@@ -28,7 +28,7 @@ public class PlatformGenerator : MonoBehaviour
     private void SpawnPlatform() 
     {
         if (platformsInWorld >= platformLimitCount) {return;}
-        Platform platform = Instantiate(basicPlatform[0], new Vector3(0,0,45), Quaternion.identity);
+        Platform platform = Instantiate(basicPlatform[0], new Vector3(0,0,44), Quaternion.identity);
         platform.TravelSpeed = platformTravelSpeed;
     }
 

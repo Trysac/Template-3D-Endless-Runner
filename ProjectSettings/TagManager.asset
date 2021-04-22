@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Platform
+  - Manager
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Manager
+  - Player
   - 
   - 
   - 
