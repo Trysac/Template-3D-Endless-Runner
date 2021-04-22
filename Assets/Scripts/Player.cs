@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float MovementSpeed = 1f;
-    [SerializeField] float lateralMovementTransition = 0.5f;
+    [SerializeField] float jumpingForce = 1f;
+    //[SerializeField] float lateralMovementTransition = 0.5f;
 
-    bool IsAlive;
-    bool IsTochingTheGround;
-    float currentYAnguls;
-    float[] limitsXPosition = {0,2};
-
+    float[] limitsXPosition = { -2.5f, 2.5f };
+   
+    public bool IsAlive { get; set; }
+    public bool IsTochingTheGround { get; set; }
+    
     Rigidbody myRigidbody;
+    Animator myAnimator;
 
     void Start()
     {
-        currentYAnguls = transform.rotation.y;
         IsAlive = true;
         IsTochingTheGround = true;
 
+        myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody>();
     }
 
@@ -28,43 +29,43 @@ public class Player : MonoBehaviour
     {
         if (IsAlive) 
         { 
-            myRigidbody.velocity = Vector3.forward * MovementSpeed;
             ManageInputs();
-        }
-        
+        }   
     }
 
-    public void Dead() { }
+
     private void ManageInputs()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < limitsXPosition[1])
-        {
-            LateralMovement(4);
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > limitsXPosition[0])
-        {
-            LateralMovement(-4);
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && IsTochingTheGround)
-        {
-            Jump();
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            Swept();
-        }
-
+        if (IsTochingTheGround) 
+        { 
+            if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < limitsXPosition[1])
+            {
+                LateralMovement(limitsXPosition[1]);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > limitsXPosition[0])
+            {
+                LateralMovement(limitsXPosition[0]);
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) && IsTochingTheGround)
+            {
+                Jump();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Swept();
+            }
+        }     
     }
 
     private void Jump() 
     {
+        myRigidbody.AddRelativeForce(Vector3.up * jumpingForce, ForceMode.Impulse);
         IsTochingTheGround = false;
-        print("Jumping");
     }
 
     private void LateralMovement(float move) 
     {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x + move, transform.position.y,transform.position.z), lateralMovementTransition);
+        transform.Translate(move, 0, 0);
     }
 
     private void Swept() 
@@ -72,13 +73,17 @@ public class Player : MonoBehaviour
         print("Swepting");
     }
 
-    public float[] GetLimitsXPosition() 
+    public void Dead() 
     {
-        return limitsXPosition;
+        print("Dead - Game Over");
     }
 
-    public bool GetIsAlive() 
+    private void OnCollisionEnter(Collision collision)
     {
-        return IsAlive;
+        if (collision.gameObject.tag.Equals("Ground"))
+        {
+            IsTochingTheGround = true;
+        }
     }
+
 }

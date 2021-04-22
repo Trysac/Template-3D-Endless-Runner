@@ -19,7 +19,7 @@ public class PlatformGenerator : MonoBehaviour
     void Update()
     {
         platformsInWorld = FindObjectsOfType<Platform>().Length;
-        if (FindObjectOfType<Player>().GetIsAlive()) 
+        if (FindObjectOfType<Player>().IsAlive) 
         {
             SpawnPlatform();
         }

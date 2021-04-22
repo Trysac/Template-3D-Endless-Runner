@@ -6,21 +6,19 @@ public class Game_Manager : MonoBehaviour
 {
     [SerializeField] Transform playerPosition;
 
-    float xOffset;
-    float zOffset;
+    Vector3 offSet;
 
     void Start()
     {
-        xOffset = playerPosition.position.x - transform.position.x;
-        zOffset = playerPosition.position.z - transform.position.z;
+        offSet = playerPosition.position - transform.position;
     }
 
     void Update()
     {
-        if (FindObjectOfType<Player>() != null && FindObjectOfType<Player>().GetIsAlive()) 
+        if (FindObjectOfType<Player>() != null && FindObjectOfType<Player>().IsAlive) 
         {
-            transform.LookAt(playerPosition);
-            transform.position = new Vector3(playerPosition.position.x -xOffset, transform.position.y, playerPosition.position.z - zOffset);
+            Vector3 cameraPos = new Vector3(transform.position.x, transform.position.y, playerPosition.position.z + - offSet.z);
+            transform.position = cameraPos;
         }
     }
 
