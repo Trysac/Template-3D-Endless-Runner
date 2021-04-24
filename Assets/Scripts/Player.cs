@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
     {
         if (IsAlive) 
         { 
-            //ManageInputs();
             AlternativeMove();
         }   
     }
@@ -59,28 +58,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ManageInputs()
-    {
-        if (IsTochingTheGround) 
-        { 
-            if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < limitsXPosition[1])
-            {
-                LateralMovement(limitsXPosition[1]);
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > limitsXPosition[0])
-            {
-                LateralMovement(limitsXPosition[0]);
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) && IsTochingTheGround)
-            {
-                Jump();
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                Swept();
-            }
-        }     
-    }
+    
 
     private void Jump() 
     {
@@ -105,9 +83,40 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag.Equals("Ground"))
+        if (collision.gameObject.tag.Equals("Ground") || collision.gameObject.tag.Equals("Obstacule"))
         {
             IsTochingTheGround = true;
+        }
+    }
+
+
+
+
+
+    ////////////////////////////////////////////////////////////
+    //////////////////////OLD Methots///////////////////////////
+    ////////////////////////////////////////////////////////////
+
+    private void ManageInputs()
+    {
+        if (IsTochingTheGround)
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < limitsXPosition[1])
+            {
+                LateralMovement(limitsXPosition[1]);
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > limitsXPosition[0])
+            {
+                LateralMovement(limitsXPosition[0]);
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow) && IsTochingTheGround)
+            {
+                Jump();
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Swept();
+            }
         }
     }
 

@@ -11,4 +11,17 @@ public class Trap : MonoBehaviour
             print("Dead");
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            print("Dead");
+        }
+    }
+
+    private void OnParticleTrigger()
+    {
+        print("Dead");
+    }
 }
