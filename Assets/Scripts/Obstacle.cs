@@ -5,12 +5,12 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     [SerializeField] bool isDestructible;
-    
-    bool isDestroy;
+
+    public bool IsDestroy{ get; set; }
 
     private void Start()
     {
-        isDestroy = false;
+        IsDestroy = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -27,9 +27,9 @@ public class Obstacle : MonoBehaviour
        
     public void DestroyObstacle() 
     {
-        if (!isDestroy) 
+        if (!IsDestroy) 
         {
-            isDestroy = true;
+            IsDestroy = true;
             //Animation, sound, effects...
             Destroy(gameObject);
         }        
