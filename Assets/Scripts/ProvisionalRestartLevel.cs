@@ -11,5 +11,9 @@ public class ProvisionalRestartLevel : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
+        else 
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
