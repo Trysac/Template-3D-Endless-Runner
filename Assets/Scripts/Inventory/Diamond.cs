@@ -24,6 +24,11 @@ public class Diamond : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -30) 
+        {
+            Destroy(gameObject);
+        }
+
         transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
         if (Game_Manager.IsGameActive)
         {
@@ -47,7 +52,7 @@ public class Diamond : MonoBehaviour
                 GetComponent<MeshRenderer>().enabled = false;
                 GetComponent<SphereCollider>().enabled = false;
                 isTaken = true;
-                Game_Manager.Coins += ValueInGems;
+                Game_Manager.Diamonds += ValueInGems;
                 Game_Manager.GeneralScore += ValueInPoints;
                 Destroy(gameObject, 0.5f);
             }

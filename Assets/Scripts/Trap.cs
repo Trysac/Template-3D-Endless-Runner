@@ -20,8 +20,8 @@ public class Trap : MonoBehaviour
         }
     }
 
-    private void OnParticleTrigger()
-    {
-        print("Dead");
-    }
+    //private void OnParticleTrigger()
+    //{
+    //    print("Dead");
+    //}
 }

@@ -33,13 +33,14 @@ public class Game_Manager : MonoBehaviour
 
     void Update()
     {
-        if (FindObjectOfType<Player>() != null && FindObjectOfType<Player>().IsAlive) 
+        if (FindObjectOfType<Player>().IsAlive) 
         {
             Vector3 cameraPos = new Vector3(transform.position.x, transform.position.y, playerPosition.position.z + - offSet.z);
             transform.position = cameraPos;
         }
         else 
         {
+            IsGameActive = false;
             StopCoroutine(UpdateDistanceAndScore());
             UpdatePlayerPrefs();
         }
@@ -66,9 +67,14 @@ public class Game_Manager : MonoBehaviour
     private IEnumerator UpdateDistanceAndScore() 
     {
         yield return new WaitForSeconds(DistanceUpdateRate);
-        Distance += 1;
-        GeneralScore += 10;
-        StartCoroutine(UpdateDistanceAndScore());
+        
+        if (IsGameActive) 
+        {
+            Distance += 1;
+            GeneralScore += 10;
+            StartCoroutine(UpdateDistanceAndScore());
+        }
+
     }
 
     public void StartGameOverSecuence() 
