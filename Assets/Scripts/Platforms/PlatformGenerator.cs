@@ -10,45 +10,50 @@ public class PlatformGenerator : MonoBehaviour
     [SerializeField] Transform platformsContainer;
 
     [Header("Prefabs")]
-    [SerializeField] Platform[] basicPlatform;
+    [SerializeField] Platform[] basicTrapsPlatforms;
+    [SerializeField] Platform[] basicConnectionPlatforms;
     [SerializeField] GameObject[] MediumPlatform;
     [SerializeField] GameObject[] HardPlatform;
     [SerializeField] GameObject[] interceptionPlatform;
 
-    //int platformsInWorld;
+    bool spawnTrapPlatform;
     private void Start()
     {
+        spawnTrapPlatform = false;
         StartCoroutine(SpawnPlatforms());
     }
 
     void Update()
     {
-        if (Game_Manager.IsGameActive) 
-        {
-            //platformsInWorld = FindObjectsOfType<Platform>().Length;
-            //SpawnPlatform();
-        }
-        else 
+        if (!Game_Manager.IsGameActive) 
         {
             StopCoroutine(SpawnPlatforms());
         }
     }
 
-    private void SpawnPlatform() 
-    {
-        //if (platformsInWorld >= platformLimitCount) {return;}
-        Platform platform = Instantiate(basicPlatform[0], new Vector3(0,0,44), Quaternion.identity);
-        platform.TravelSpeed = platformTravelSpeed;
-    }
-
     private IEnumerator SpawnPlatforms() 
     {
-        //if (platformsInWorld >= platformLimitCount) { yield return null; }
         yield return new WaitForSeconds(18/ platformTravelSpeed - 0.2f);
-        Platform platform = Instantiate(basicPlatform[0], new Vector3(0, 0, 63), Quaternion.identity);
+
+        if (spawnTrapPlatform) { SpawnTrapPlatform();}
+            else { SpawnConnectionPlatform();}
+
+        StartCoroutine(SpawnPlatforms());
+    }
+
+    private void SpawnTrapPlatform() 
+    {
+        Platform platform = Instantiate(basicTrapsPlatforms[Random.Range(0, basicTrapsPlatforms.Length)], new Vector3(0, 0, 63), Quaternion.identity);
         platform.TravelSpeed = platformTravelSpeed;
         platform.transform.SetParent(platformsContainer);
-        StartCoroutine(SpawnPlatforms());
+        spawnTrapPlatform = false;
+    }
+    private void SpawnConnectionPlatform() 
+    {
+        Platform platform = Instantiate(basicConnectionPlatforms[Random.Range(0, basicConnectionPlatforms.Length)], new Vector3(0, 0, 63), Quaternion.identity);
+        platform.TravelSpeed = platformTravelSpeed;
+        platform.transform.SetParent(platformsContainer);
+        spawnTrapPlatform = true;
     }
 
 }
