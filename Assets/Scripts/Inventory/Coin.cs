@@ -5,7 +5,8 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     [SerializeField] float rotationSpeed = 1f;
-    [SerializeField] int Value = 10;
+    [SerializeField] int ValueInCoins = 10;
+    [SerializeField] int ValueInPoints = 20;
     [SerializeField] AudioClip pickupSound;
 
     bool isTaken;
@@ -15,6 +16,7 @@ public class Coin : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
         isTaken = false;
     }
 
@@ -33,6 +35,8 @@ public class Coin : MonoBehaviour
                 audioSource.Play();
                 GetComponent<MeshRenderer>().enabled = false;
                 isTaken = true;
+                Game_Manager.Coins += ValueInCoins;
+                Game_Manager.GeneralScore += ValueInPoints;
                 Destroy(gameObject, 0.5f);
             }          
         }
