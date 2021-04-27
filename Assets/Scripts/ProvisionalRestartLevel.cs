@@ -9,7 +9,7 @@ public class ProvisionalRestartLevel : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("Player")) 
         {
-            SceneManager.LoadScene(0);
+            other.gameObject.GetComponent<Player>().IsAlive = false;
         }
         else 
         {
