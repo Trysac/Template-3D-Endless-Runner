@@ -7,6 +7,8 @@ public class Diamond : MonoBehaviour
     [SerializeField] float rotationSpeed = 1f;
     [SerializeField] int ValueInGems = 1;
     [SerializeField] int ValueInPoints = 100;
+    [SerializeField] float travelSpeed = 2f;
+
     [SerializeField] AudioClip pickupSound;
 
     bool isTaken;
@@ -22,7 +24,16 @@ public class Diamond : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+        if (Game_Manager.IsGameActive)
+        {
+            Move();
+        }
+    }
+
+    private void Move()
+    {
+        transform.position = transform.position - (Vector3.forward * travelSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -34,6 +45,7 @@ public class Diamond : MonoBehaviour
                 audioSource.clip = pickupSound;
                 audioSource.Play();
                 GetComponent<MeshRenderer>().enabled = false;
+                GetComponent<SphereCollider>().enabled = false;
                 isTaken = true;
                 Game_Manager.Coins += ValueInGems;
                 Game_Manager.GeneralScore += ValueInPoints;
