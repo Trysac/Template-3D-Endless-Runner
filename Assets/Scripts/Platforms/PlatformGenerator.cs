@@ -6,7 +6,6 @@ public class PlatformGenerator : MonoBehaviour
 {
     [Header("Genereal Parameters")]
     [SerializeField] float platformTravelSpeed = 2;
-    [SerializeField] int platformLimitCount = 4;
     [SerializeField] Transform platformsContainer;
 
     [Header("Prefabs")]

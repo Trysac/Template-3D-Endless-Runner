@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float jumpingForce = 1f;
+    [SerializeField] float timeScale = 1.2f;
     [SerializeField] float alternativeMovementMechanicSpeed = 1f;
 
     float[] limitsXPosition = { -2.5f, 2.5f };
@@ -28,9 +29,22 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (IsAlive) 
-        { 
+        {
+            Sprint();
             AlternativeMove();
         }   
+    }
+
+    private void Sprint() 
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) 
+        {
+            Time.timeScale = timeScale;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift)) 
+        {
+            Time.timeScale = 1f;
+        }
     }
 
     private void AlternativeMove() 
@@ -57,8 +71,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-
-    
 
     private void Jump() 
     {
