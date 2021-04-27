@@ -1949,8 +1949,15 @@ MonoBehaviour:
   platformTravelSpeed: 2
   platformLimitCount: 4
   platformsContainer: {fileID: 1187391621}
-  basicPlatform:
-  - {fileID: 7959008567363342113, guid: 08b35c3c3403e9941908f89a35848050, type: 3}
+  basicTrapsPlatforms:
+  - {fileID: 5282616345710789584, guid: cdf56de6fdb24964ea7f152cc535add1, type: 3}
+  - {fileID: 8567619148318920733, guid: e430bffa6c0f5bf4fa64fd113b8f366e, type: 3}
+  - {fileID: 158436735615784087, guid: f26755d312e578e4eb0d1f2eca09a0df, type: 3}
+  - {fileID: 6841094362502228678, guid: 88c82e74dd76dfb4292ab51a15d6c0b4, type: 3}
+  basicConnectionPlatforms:
+  - {fileID: 7959008567363342113, guid: 5b61a6f53d73011438e0627ebeb0e4df, type: 3}
+  - {fileID: 7959008567363342113, guid: 871fbf777230eca4aafe9683eec87041, type: 3}
+  - {fileID: 7959008567363342113, guid: b050595327e87194eb5b0d5f6784529e, type: 3}
   MediumPlatform: []
   HardPlatform: []
   interceptionPlatform: []
