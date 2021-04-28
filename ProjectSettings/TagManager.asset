@@ -9,6 +9,7 @@ TagManager:
   - Manager
   - Obstacule
   - Fire
+  - Laser
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Manager
   - Player
   - Fire
-  - 
+  - Shield
   - 
   - 
   - 
