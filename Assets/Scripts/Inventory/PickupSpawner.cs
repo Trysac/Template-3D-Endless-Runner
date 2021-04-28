@@ -14,7 +14,7 @@ public class PickupSpawner : MonoBehaviour
     void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
-        StartCoroutine(SpawnGems());
+        StartCoroutine(SpawnPickup());
     }
 
 
@@ -22,24 +22,48 @@ public class PickupSpawner : MonoBehaviour
     {
         if (!Game_Manager.IsGameActive) 
         {
-            StopCoroutine(SpawnGems());
+            StopCoroutine(SpawnPickup());
         }
     }
 
-    private IEnumerator SpawnGems() 
+    private IEnumerator SpawnPickup() 
     {
         yield return new WaitForSeconds(spawnRate);
 
+        if (Random.Range(0,11) <= 7) 
+        {
+            SpawnGems();
+        }
+        else 
+        {
+            SpawnPowers();
+        }
+
+        StartCoroutine(SpawnPickup());
+    }
+
+    private void SpawnGems() 
+    {
         Vector3 spawnPos = new Vector3(
-            boxCollider.center.x + Random.Range(-boxCollider.size.x/2, boxCollider.size.x / 2), 
-            transform.position.y, 
+            boxCollider.center.x + Random.Range(-boxCollider.size.x / 2, boxCollider.size.x / 2),
+            transform.position.y,
             boxCollider.center.z + Random.Range(-boxCollider.size.z / 2, boxCollider.size.z / 2));
 
         int index = Random.Range(0, GemsPrefabs.Length);
         GameObject pickup = Instantiate(GemsPrefabs[index], spawnPos, GemsPrefabs[index].transform.rotation);
         pickup.transform.SetParent(pickupsParent);
+    }
 
-        StartCoroutine(SpawnGems());
+    private void SpawnPowers() 
+    {
+        Vector3 spawnPos = new Vector3(
+                boxCollider.center.x + Random.Range(-boxCollider.size.x / 2, boxCollider.size.x / 2),
+                boxCollider.center.y + 1.2f,
+                boxCollider.center.z + Random.Range(-boxCollider.size.z / 2, boxCollider.size.z / 2));
+
+        int index = Random.Range(0, PowerupsPrefabs.Length);
+        GameObject pickup = Instantiate(PowerupsPrefabs[index], spawnPos, PowerupsPrefabs[index].transform.rotation);
+        pickup.transform.SetParent(pickupsParent);
     }
 
 
