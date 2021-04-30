@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
     private void Jump() 
     {
         myRigidbody.AddRelativeForce(Vector3.up * jumpingForce, ForceMode.Impulse);
+        myAnimator.SetBool("Jump",true);
         IsTochingTheGround = false;
     }
 
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Ground") || collision.gameObject.tag.Equals("Obstacule"))
         {
+            myAnimator.SetBool("Jump", false);
             IsTochingTheGround = true;
         }
     }
