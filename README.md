@@ -3,7 +3,7 @@
 A small 3D endless runner built with Unity: a knight dashes down a torch-lit castle corridor,
 changing lanes, jumping barricades and sliding under spiked beams while the speed keeps rising.
 
-![The knight running the gauntlet past barricades, with coins ahead](docs/screenshots/run.png)
+![The knight running the gauntlet under spiked beams, with coins ahead](docs/screenshots/run.png)
 
 | | |
 |---|---|
@@ -53,7 +53,8 @@ and Player Settings**, and the audio with `python tools/audio/build.py` (needs f
 | Pause | Esc or P | Start | II button |
 | Run / run again | Enter or Space (R on the results) | A (Y on the results) | Buttons |
 | Shop | Tab | X | Shop button |
-| Back | Esc or Backspace | B | Back button |
+| Back (menus and shop) | Esc or Backspace | B | Back button |
+| Resume from pause | Esc, P, Enter or Space | Start or A | Resume button |
 
 ## How it plays
 
@@ -78,7 +79,7 @@ and Player Settings**, and the audio with `python tools/audio/build.py` (needs f
 - **Rules without the engine.** Lanes, the jump arc with input buffering, slides, collisions,
   pickups, power-ups, the difficulty curve, the pattern generator, the session flow, the shop
   and the saved profile live in `Assets/Scripts/Core`, a plain C# assembly with no Unity
-  references, covered by 56 EditMode tests. The Unity layer only renders, plays effects and
+  references, covered by 57 EditMode tests. The Unity layer only renders, plays effects and
   reads input; 6 PlayMode tests drive the real scene (start, steering, crash and results,
   restart during the death beat, pause, shop).
 - **A bot keeps the road honest.** `Autopilot` keeps to the lane with the most open road,
