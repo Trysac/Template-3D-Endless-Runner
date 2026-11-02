@@ -52,8 +52,7 @@ public class Diamond : MonoBehaviour
                 GetComponent<MeshRenderer>().enabled = false;
                 GetComponent<SphereCollider>().enabled = false;
                 isTaken = true;
-                Game_Manager.Diamonds += ValueInGems;
-                Game_Manager.GeneralScore += ValueInPoints;
+                Game_Manager.Run.Score.AddGems(ValueInGems, ValueInPoints);
                 Destroy(gameObject, 0.5f);
             }
         }

@@ -1,0 +1,58 @@
+using GauntletRun.Core;
+using NUnit.Framework;
+
+namespace GauntletRun.Core.Tests
+{
+    public class TrackTests
+    {
+        [Test]
+        public void SteeringMovesInsideTheRoad()
+        {
+            Assert.That(LateralMovement.Step(0f, 1f, 0.5f, 2f, 2.5f), Is.EqualTo(1f));
+            Assert.That(LateralMovement.Step(0f, -1f, 0.5f, 2f, 2.5f), Is.EqualTo(-1f));
+            Assert.That(LateralMovement.Step(1f, 0f, 0.5f, 2f, 2.5f), Is.EqualTo(1f));
+        }
+
+        [Test]
+        public void TheRoadAddsPlatformsFarAheadAndSlidesThemTowardsThePlayer()
+        {
+            var track = new PlatformTrack(18f, 63f, 2f);
+            int added = track.Tick(track.Interval);
+            Assert.That(added, Is.EqualTo(1));
+            Assert.That(track.Platforms[0], Is.EqualTo(63f).Within(1e-3f));
+            track.Tick(1f);
+            Assert.That(track.Platforms[0], Is.EqualTo(61f).Within(1e-3f));
+        }
+
+        [Test]
+        public void PlatformsAlternateBetweenConnectionAndTrapPieces()
+        {
+            Assert.That(PlatformTrack.IsTrap(0), Is.False);
+            Assert.That(PlatformTrack.IsTrap(1), Is.True);
+            Assert.That(PlatformTrack.IsTrap(2), Is.False);
+        }
+
+        [Test]
+        public void TheRunCountsOneMetreEverySecond()
+        {
+            var run = new RunTimeline(1f, 4f, new PlatformTrack(18f, 63f, 2f));
+            for (int i = 0; i < 10; i++)
+            {
+                run.Tick(0.5f, out _, out _);
+            }
+            Assert.That(run.Score.Distance, Is.EqualTo(5));
+            Assert.That(run.Score.Score, Is.EqualTo(50));
+            Assert.That(run.Active, Is.True);
+        }
+
+        [Test]
+        public void APickupIsDueEveryPickupInterval()
+        {
+            var run = new RunTimeline(1f, 4f, new PlatformTrack(18f, 63f, 2f));
+            run.Tick(3.9f, out _, out int early);
+            run.Tick(0.2f, out _, out int due);
+            Assert.That(early, Is.EqualTo(0));
+            Assert.That(due, Is.EqualTo(1));
+        }
+    }
+}

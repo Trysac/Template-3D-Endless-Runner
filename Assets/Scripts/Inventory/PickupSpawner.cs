@@ -7,39 +7,27 @@ public class PickupSpawner : MonoBehaviour
     [SerializeField] GameObject[] GemsPrefabs;
     [SerializeField] GameObject[] PowerupsPrefabs;
     [SerializeField] Transform pickupsParent;
-    [Tooltip("In Seconds")][SerializeField] float spawnRate = 1f;
 
     BoxCollider boxCollider;
 
     void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
-        StartCoroutine(SpawnPickup());
     }
 
-
-    void Update()
+    void LateUpdate()
     {
-        if (!Game_Manager.IsGameActive) 
+        for (int i = 0; i < Game_Manager.PickupsThisFrame; i++)
         {
-            StopCoroutine(SpawnPickup());
+            if (Random.Range(0, 11) <= 7)
+            {
+                SpawnGems();
+            }
+            else
+            {
+                SpawnPowers();
+            }
         }
-    }
-
-    private IEnumerator SpawnPickup() 
-    {
-        yield return new WaitForSeconds(spawnRate);
-
-        if (Random.Range(0,11) <= 7) 
-        {
-            SpawnGems();
-        }
-        else 
-        {
-            SpawnPowers();
-        }
-
-        StartCoroutine(SpawnPickup());
     }
 
     private void SpawnGems() 

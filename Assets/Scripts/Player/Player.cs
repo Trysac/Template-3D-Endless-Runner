@@ -52,14 +52,8 @@ public class Player : MonoBehaviour
         if (IsTochingTheGround)
         {
             float horizontalMovement = Input.GetAxis("Horizontal");
-            if (horizontalMovement > 0 && transform.position.x < limitsXPosition[1])
-            {
-                transform.Translate(horizontalMovement * Time.deltaTime * alternativeMovementMechanicSpeed, 0,0);
-            }
-            else if (horizontalMovement < 0 && transform.position.x > limitsXPosition[0])
-            {
-                transform.Translate(horizontalMovement * Time.deltaTime * alternativeMovementMechanicSpeed, 0, 0);
-            }
+            float x = GauntletRun.Core.LateralMovement.Step(transform.position.x, horizontalMovement, Time.deltaTime, alternativeMovementMechanicSpeed, limitsXPosition[1]);
+            transform.Translate(x - transform.position.x, 0, 0, Space.World);
             
             if (Input.GetKeyDown(KeyCode.Space))
             {

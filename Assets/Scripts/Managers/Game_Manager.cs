@@ -1,84 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
+using GauntletRun.Core;
 using UnityEngine;
 
+/// <summary>Runs the run clock from the core and keeps the camera behind the player.</summary>
 public class Game_Manager : MonoBehaviour
 {
     [SerializeField] Transform playerPosition;
     [Tooltip("In seconds")] [SerializeField] float distanceUpdateRate = 1f;
+    [Tooltip("In seconds")] [SerializeField] float pickupSpawnRate = 4f;
+    [SerializeField] float platformTravelSpeed = 2f;
 
-    public static float Distance { get; set; }
-    public static int GeneralScore { get; set; }
-    public static int Coins { get; set; }
-    public static int Diamonds { get; set; }
+    public static RunTimeline Run { get; private set; }
+
+    public static int Distance => Run?.Score.Distance ?? 0;
+    public static int GeneralScore => Run?.Score.Score ?? 0;
+    public static int Coins => Run?.Score.Coins ?? 0;
+    public static int Diamonds => Run?.Score.Gems ?? 0;
+    public static bool IsGameActive => Run != null && Run.Active;
+
+    /// <summary>Platforms the road gained this frame (read by the PlatformGenerator).</summary>
+    public static int PlatformsThisFrame { get; private set; }
+
+    /// <summary>Pickups due this frame (read by the PickupSpawner).</summary>
+    public static int PickupsThisFrame { get; private set; }
 
     Vector3 offSet;
+    Player player;
+    bool saved;
 
-    public static bool IsGameActive { get; set; }
-    public static float DistanceUpdateRate { get; set; }
+    void Awake()
+    {
+        Run = new RunTimeline(distanceUpdateRate, pickupSpawnRate, new PlatformTrack(18f, 63f, platformTravelSpeed));
+        PlatformsThisFrame = 0;
+        PickupsThisFrame = 0;
+    }
 
     void Start()
     {
-        Distance = 0;
-        GeneralScore = 0;
-        Coins = 0;
-        Diamonds = 0;
-
-        DistanceUpdateRate = distanceUpdateRate;
-        IsGameActive = true;
-        StartCoroutine(UpdateDistanceAndScore());
-
         offSet = playerPosition.position - transform.position;
+        player = FindFirstObjectByType<Player>();
     }
 
     void Update()
     {
-        if (FindFirstObjectByType<Player>().IsAlive) 
+        Run.Tick(Time.deltaTime, out int platforms, out int pickups);
+        PlatformsThisFrame = platforms;
+        PickupsThisFrame = pickups;
+
+        if (player.IsAlive)
         {
-            Vector3 cameraPos = new Vector3(transform.position.x, transform.position.y, playerPosition.position.z + - offSet.z);
-            transform.position = cameraPos;
+            transform.position = new Vector3(transform.position.x, transform.position.y, playerPosition.position.z - offSet.z);
         }
-        else 
+        else if (!saved)
         {
-            IsGameActive = false;
-            StopCoroutine(UpdateDistanceAndScore());
-            UpdatePlayerPrefs();
+            Run.End();
+            SaveHighScore();
+            saved = true;
         }
     }
 
-    private void UpdatePlayerPrefs()
+    static void SaveHighScore()
     {
-        if (GeneralScore > PlayerPrefs.GetFloat("HighScore")) 
-        { 
-            PlayerPrefs.SetFloat("HighScore", GeneralScore);
-        }
-
+        int best = ScoreKeeper.Best(GeneralScore, (int)PlayerPrefs.GetFloat("HighScore"));
+        PlayerPrefs.SetFloat("HighScore", best);
         PlayerPrefs.SetFloat("LastScore", GeneralScore);
-
-        //if (Distance > PlayerPrefs.GetFloat("HighScore"))
-        //{
-        //    PlayerPrefs.SetFloat("HighScore", Distance);
-        //}
-
-        //PlayerPrefs.SetInt("CoinsInInventory", PlayerPrefs.GetInt("CoinsInInventory").Equals(0) ? Coins : PlayerPrefs.GetInt("CoinsInInventory") + Coins);
-        //PlayerPrefs.SetInt("GemsInInventory", PlayerPrefs.GetInt("GemsInInventory").Equals(0) ? Diamonds : PlayerPrefs.GetInt("GemsInInventory") + Diamonds);
-    }
-
-    private IEnumerator UpdateDistanceAndScore() 
-    {
-        yield return new WaitForSeconds(DistanceUpdateRate);
-        
-        if (IsGameActive) 
-        {
-            Distance += 1;
-            GeneralScore += 10;
-            StartCoroutine(UpdateDistanceAndScore());
-        }
-
-    }
-
-    public void StartGameOverSecuence() 
-    { 
-    
     }
 }

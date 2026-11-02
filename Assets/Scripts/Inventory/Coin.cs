@@ -35,8 +35,7 @@ public class Coin : MonoBehaviour
                 audioSource.Play();
                 GetComponent<MeshRenderer>().enabled = false;
                 isTaken = true;
-                Game_Manager.Coins += ValueInCoins;
-                Game_Manager.GeneralScore += ValueInPoints;
+                Game_Manager.Run.Score.AddCoins(ValueInCoins, ValueInPoints);
                 Destroy(gameObject, 0.5f);
             }          
         }
