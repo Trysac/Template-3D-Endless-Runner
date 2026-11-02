@@ -179,6 +179,7 @@ namespace GauntletRun.Core
         {
             if (Screen == Screen.Shop)
             {
+                Run = null;
                 Screen = Screen.Title;
             }
         }

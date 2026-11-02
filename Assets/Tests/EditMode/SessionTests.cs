@@ -242,6 +242,20 @@ namespace GauntletRun.Core.Tests
             session.CloseShop();
             Assert.That(session.Screen, Is.EqualTo(Screen.Title));
         }
+
+        [Test]
+        public void TheShopOpensFromTheResultsAndLeavesForTheTitle()
+        {
+            Session session = NewSession(out _);
+            session.StartRun(new ScriptedTrack(10f, 3f, ".W."));
+            Frames(session, 2f + Session.DeathBeat + 0.2f);
+            Assert.That(session.Screen, Is.EqualTo(Screen.GameOver));
+            session.OpenShop();
+            Assert.That(session.Screen, Is.EqualTo(Screen.Shop));
+            session.CloseShop();
+            Assert.That(session.Screen, Is.EqualTo(Screen.Title));
+            Assert.That(session.Run, Is.Null, "the finished run is put away");
+        }
     }
 
     public class ProfileTests

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139438c375945c04784bfb23b0f109f0, type: 3}
+  m_Name: GameArt
+  m_EditorClassIdentifier: GauntletRun.Game::GauntletRun.Game.GameArt
+  Floor: {fileID: 2100000, guid: cbe4a99148b82dd44992518f0cca93cd, type: 2}
+  FloorDark: {fileID: 2100000, guid: 970226b1adb50e741ad9e1a6acf928b2, type: 2}
+  Trim: {fileID: 2100000, guid: 4b35a0137ede0ca4eb355a9b4aaf3285, type: 2}
+  Wall: {fileID: 2100000, guid: d66f2720d10c9b942921453e3ff95733, type: 2}
+  WallDark: {fileID: 2100000, guid: 5d57d96c4b6383a4b9e169d93c7c31b7, type: 2}
+  Banner: {fileID: 2100000, guid: 52a7e9dc3be5ac74ea82e94d0765e824, type: 2}
+  TorchFlame: {fileID: 2100000, guid: 28deafa782dab324cbbe4769cc8b35b4, type: 2}
+  Wood: {fileID: 2100000, guid: cc28acf3efd636841a265a95153acedc, type: 2}
+  WoodDark: {fileID: 2100000, guid: ae6c6b1a025b6804e83702eeb50a01dc, type: 2}
+  Iron: {fileID: 2100000, guid: ed4069b9a1f58ad449612001e5ec219d, type: 2}
+  Steel: {fileID: 2100000, guid: 2dffdb01bafe43a4e96a574a61581208, type: 2}
+  Armour: {fileID: 2100000, guid: eba8801d88d920547a9017cc0db73dcf, type: 2}
+  Cloth: {fileID: 2100000, guid: 07041a48762372244b2a79b780f60878, type: 2}
+  Visor: {fileID: 2100000, guid: 37807169609757e43b464303ca3b8744, type: 2}
+  Gold: {fileID: 2100000, guid: a80858898d2c0ab4ab99b9de26987d3f, type: 2}
+  Gem: {fileID: 2100000, guid: 9434ca4b18071324d992a8878905771b, type: 2}
+  ShieldBlue: {fileID: 2100000, guid: ce90b22e7fed9d24ab103e072c1a2388, type: 2}
+  MagnetRed: {fileID: 2100000, guid: b379cc7d16cdabc4abcf83c97b80af24, type: 2}
+  DoublePurple: {fileID: 2100000, guid: d589ad446ba057249bd33c74f6788571, type: 2}
+  ParticleAdditive: {fileID: 2100000, guid: 7143ca85c600846439a0115d64d163d2, type: 2}
+  ParticleAlpha: {fileID: 2100000, guid: 405c6fc84d591874c8735767fc9a5824, type: 2}
+  BlobShadow: {fileID: 2100000, guid: 55b91a86b721d6943937118b5cbde043, type: 2}
+  CubeMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  SphereMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  CylinderMesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  CapsuleMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  QuadMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  RunMusic: {fileID: 8300000, guid: 691a0c22be76abc42b2850f06feff319, type: 3}
+  TitleMusic: {fileID: 8300000, guid: ecf751dd8067192418289f7cb11078dc, type: 3}
+  Coin: {fileID: 8300000, guid: cbf4fd6f6b8a33d45a6418bb0fe94c88, type: 3}
+  GemSound: {fileID: 8300000, guid: 19fdf6552af1e3c42b1d534a8bf4268e, type: 3}
+  Jump: {fileID: 8300000, guid: eb402c57e16f67e4a9ccce6ab0cb7f40, type: 3}
+  Land: {fileID: 8300000, guid: fd1cf194ae5537d46b2f0d5b03430dcd, type: 3}
+  Slide: {fileID: 8300000, guid: 63fd5a711c10b1944910800b5a3f5f1e, type: 3}
+  Lane: {fileID: 8300000, guid: d6a916dae4f75ec40a8aca87151a5322, type: 3}
+  PowerUp: {fileID: 8300000, guid: bb59955c5ec3d794e93684ff2785246f, type: 3}
+  ShieldBreak: {fileID: 8300000, guid: 4fdd9bcfe3f48f145b84170799ed3f04, type: 3}
+  Crash: {fileID: 8300000, guid: 828198f00434bf54ca1924070fafc462, type: 3}
+  Milestone: {fileID: 8300000, guid: 71a5192db4392c8428e15ac29ec1f927, type: 3}
+  GameOver: {fileID: 8300000, guid: 2e86a2ee174252040a066d48f493ef6d, type: 3}
+  NewBest: {fileID: 8300000, guid: feff4fbbe7ce04f4b8120d6acc39eaf3, type: 3}
+  Buy: {fileID: 8300000, guid: c7172a3dc5e0ace4ea5ccd4ba411bd6a, type: 3}
+  Click: {fileID: 8300000, guid: 787103f9bd757964f839fb1f42066795, type: 3}
+  Denied: {fileID: 8300000, guid: e5e755e36b17a3d49af15f3cc882fad3, type: 3}

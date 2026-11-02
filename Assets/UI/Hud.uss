@@ -1,0 +1,431 @@
+/*
+ * Gauntlet Run HUD: dark slate panels with gilded edges over the torch-lit corridor.
+ * Designed at 1280x720 reference pixels; the panel settings scale it to the screen.
+ */
+
+:root {
+    --ink: #120e16;
+    --panel: rgba(22, 18, 30, 0.9);
+    --edge: #c9a24a;
+    --gold: #f2c14e;
+    --text: #f3ead7;
+    --muted: #b3a891;
+    --red: #e0533f;
+    --blue: #5aa7ff;
+    --purple: #b678ff;
+
+    color: var(--text);
+    font-size: 17px;
+}
+
+.hud,
+.layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.row--center {
+    justify-content: center;
+}
+
+/* ---- Buttons ---- */
+
+.button {
+    margin: 5px;
+    padding: 6px 16px;
+    border-width: 2px;
+    border-radius: 8px;
+    border-color: var(--edge);
+    background-color: #2d2638;
+    color: var(--text);
+    font-size: 18px;
+    -unity-font-style: bold;
+    transition-property: scale, background-color;
+    transition-duration: 0.08s;
+}
+
+.button:hover {
+    background-color: #4a3d5c;
+    scale: 1.04 1.04;
+}
+
+.button:active {
+    scale: 0.96 0.96;
+}
+
+.button--square {
+    width: 44px;
+    height: 40px;
+    padding: 0;
+    font-size: 18px;
+    -unity-text-align: middle-center;
+}
+
+.button--wide {
+    width: 280px;
+    height: 44px;
+}
+
+.button--wide-half {
+    width: 160px;
+    height: 44px;
+}
+
+.button--big {
+    width: 330px;
+    height: 60px;
+    font-size: 26px;
+    margin-top: 14px;
+    background-color: #b8862b;
+    color: var(--ink);
+}
+
+.button--big:hover,
+.button--primary:hover {
+    background-color: #e0ad48;
+}
+
+.button--primary {
+    background-color: #b8862b;
+    color: var(--ink);
+}
+
+.button--danger {
+    background-color: #5a2525;
+}
+
+/* ---- In-run readouts ---- */
+
+.corner {
+    position: absolute;
+    top: 12px;
+}
+
+.corner--left {
+    left: 18px;
+}
+
+.corner--right {
+    right: 14px;
+    align-items: flex-end;
+}
+
+.score {
+    font-size: 40px;
+    -unity-font-style: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7);
+}
+
+.distance {
+    font-size: 20px;
+    color: var(--muted);
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
+}
+
+.multiplier {
+    margin-top: 4px;
+    padding: 2px 10px;
+    border-radius: 6px;
+    background-color: var(--purple);
+    color: var(--ink);
+    font-size: 16px;
+    -unity-font-style: bold;
+    align-self: flex-start;
+}
+
+.dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    border-width: 2px;
+    border-color: var(--ink);
+    margin-left: 10px;
+    margin-right: 6px;
+}
+
+.dot--coin {
+    background-color: var(--gold);
+}
+
+.dot--gem {
+    background-color: #4fd8ff;
+    rotate: 45deg;
+    border-radius: 3px;
+}
+
+.count {
+    font-size: 26px;
+    -unity-font-style: bold;
+    min-width: 40px;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7);
+}
+
+.chip {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6px;
+    margin-right: 6px;
+    padding: 4px 10px;
+    border-width: 2px;
+    border-radius: 8px;
+    border-color: var(--edge);
+    background-color: var(--panel);
+}
+
+.chip__name {
+    width: 76px;
+    font-size: 15px;
+    -unity-font-style: bold;
+}
+
+.chip__track {
+    width: 110px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.chip__fill {
+    height: 100%;
+    border-radius: 5px;
+}
+
+.chip--shield .chip__fill {
+    background-color: var(--blue);
+}
+
+.chip--magnet .chip__fill {
+    background-color: var(--red);
+}
+
+.chip--double .chip__fill {
+    background-color: var(--purple);
+}
+
+.banner {
+    position: absolute;
+    top: 150px;
+    left: 0;
+    right: 0;
+    -unity-text-align: middle-center;
+    font-size: 40px;
+    -unity-font-style: bold;
+    color: var(--gold);
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.75);
+}
+
+.hint {
+    position: absolute;
+    bottom: 22px;
+    left: 0;
+    right: 0;
+    -unity-text-align: middle-center;
+    font-size: 16px;
+    color: var(--text);
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.9);
+}
+
+/* ---- Menus ---- */
+
+.menu {
+    align-items: center;
+    justify-content: center;
+}
+
+.menu--dim {
+    background-color: rgba(8, 6, 12, 0.55);
+}
+
+.menu--title {
+    justify-content: center;
+}
+
+.menu--shop {
+    align-items: flex-end;
+    padding-right: 40px;
+}
+
+.title-card {
+    align-items: center;
+    padding: 26px 40px;
+    border-width: 3px;
+    border-radius: 14px;
+    border-color: var(--edge);
+    background-color: rgba(18, 14, 24, 0.82);
+    width: 680px;
+}
+
+.logo {
+    font-size: 58px;
+    -unity-font-style: bold;
+    color: var(--gold);
+    text-shadow: 4px 4px 0 #3a2410;
+    letter-spacing: 2px;
+}
+
+.tagline {
+    margin-top: 4px;
+    font-size: 18px;
+    color: var(--text);
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.records {
+    margin-top: 12px;
+    font-size: 17px;
+    color: var(--gold);
+    -unity-text-align: middle-center;
+}
+
+.note {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--muted);
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.panel {
+    padding: 18px 26px;
+    border-width: 3px;
+    border-radius: 14px;
+    border-color: var(--edge);
+    background-color: var(--panel);
+    align-items: center;
+}
+
+.panel__title {
+    font-size: 30px;
+    -unity-font-style: bold;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.panel--over {
+    width: 560px;
+}
+
+.result-score {
+    margin-top: 6px;
+    font-size: 54px;
+    -unity-font-style: bold;
+    color: #ffffff;
+}
+
+.new-best {
+    padding: 2px 12px;
+    border-radius: 6px;
+    background-color: var(--gold);
+    color: var(--ink);
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.details {
+    margin-top: 6px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: var(--text);
+    -unity-text-align: middle-center;
+}
+
+/* ---- Settings ---- */
+
+.volume {
+    margin-bottom: 8px;
+}
+
+.volume__name {
+    width: 80px;
+    font-size: 18px;
+}
+
+.volume__track {
+    width: 200px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+}
+
+.volume__fill {
+    height: 100%;
+    background-color: var(--gold);
+}
+
+.volume__value {
+    width: 56px;
+    font-size: 16px;
+    -unity-text-align: middle-right;
+}
+
+/* ---- Shop ---- */
+
+.panel--shop {
+    width: 640px;
+}
+
+.wallet {
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.skin {
+    width: 180px;
+    height: 104px;
+    padding: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.skin--worn {
+    border-color: #ffffff;
+    background-color: #4f3f2a;
+}
+
+.skin--locked {
+    opacity: 0.55;
+}
+
+.swatch {
+    width: 26px;
+    height: 26px;
+    margin: 2px;
+    border-radius: 13px;
+    border-width: 2px;
+    border-color: var(--ink);
+}
+
+.skin__name {
+    margin-top: 4px;
+    font-size: 16px;
+    -unity-font-style: bold;
+}
+
+.skin__state {
+    font-size: 14px;
+    color: var(--gold);
+}
