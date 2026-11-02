@@ -91,7 +91,7 @@ namespace GauntletRun.Core
                     case "best": profile.Best = Math.Max(0, value); break;
                     case "distance": profile.BestDistance = Math.Max(0, value); break;
                     case "wallet": profile.Wallet = Math.Max(0, value); break;
-                    case "owned": profile.Owned = value | 1; break;
+                    case "owned": profile.Owned = value < 0 ? 1 : (value & ((1 << Skins.All.Count) - 1)) | 1; break;
                     case "skin": profile.Skin = value; break;
                     case "music": profile.Music = Clamp(value, 0, MaxVolume); break;
                     case "effects": profile.Effects = Clamp(value, 0, MaxVolume); break;

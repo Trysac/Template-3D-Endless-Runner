@@ -285,6 +285,18 @@ namespace GauntletRun.Core.Tests
         }
 
         [Test]
+        public void ANegativeOwnedValueDoesNotUnlockEverySkin()
+        {
+            Profile odd = Profile.Parse("owned=-1;skin=5");
+            Assert.That(odd.Owns(0), Is.True, "the first skin is always owned");
+            for (int i = 1; i < Skins.All.Count; i++)
+            {
+                Assert.That(odd.Owns(i), Is.False, $"skin {i} must not be unlocked by a negative mask");
+            }
+            Assert.That(odd.Skin, Is.EqualTo(0), "an unowned skin is not worn");
+        }
+
+        [Test]
         public void TheFirstSkinIsFree()
         {
             Assert.That(Skins.All[0].Price, Is.EqualTo(0));
