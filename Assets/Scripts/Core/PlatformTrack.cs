@@ -29,9 +29,12 @@ namespace GauntletRun.Core
         public static bool IsTrap(int index) => index % 2 == 1;
 
         /// <summary>The seconds between two platforms.</summary>
-        public float Interval => Length / Speed - 0.2f;
+        public float Interval => Length / Speed;
 
-        /// <summary>Moves the road and returns how many platforms were added.</summary>
+        /// <summary>
+        /// Moves the road and returns how many platforms were added. A new platform starts
+        /// exactly where the last one ends, so the road has no gaps or overlaps at any speed.
+        /// </summary>
         public int Tick(float dt)
         {
             for (int i = 0; i < platforms.Count; i++)
@@ -39,11 +42,19 @@ namespace GauntletRun.Core
                 platforms[i] -= Speed * dt;
             }
             int added = 0;
-            timer += dt;
-            while (timer >= Interval)
+            if (platforms.Count == 0)
             {
-                timer -= Interval;
-                platforms.Add(SpawnZ - Speed * timer);
+                timer += dt;
+                if (timer < Interval)
+                {
+                    return 0;
+                }
+                platforms.Add(SpawnZ - Speed * (timer - Interval));
+                added++;
+            }
+            while (platforms[platforms.Count - 1] + Length <= SpawnZ)
+            {
+                platforms.Add(platforms[platforms.Count - 1] + Length);
                 added++;
             }
             return added;

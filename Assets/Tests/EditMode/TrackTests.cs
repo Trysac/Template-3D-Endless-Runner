@@ -54,6 +54,24 @@ namespace GauntletRun.Core.Tests
         }
 
         [Test]
+        public void ConsecutivePlatformsMeetEdgeToEdge()
+        {
+            foreach (float speed in new[] { 2f, 6f, 12f })
+            {
+                var track = new PlatformTrack(18f, 63f, speed);
+                for (int i = 0; i < 4000; i++)
+                {
+                    track.Tick(1f / 60f);
+                }
+                Assert.That(track.Platforms.Count, Is.GreaterThan(3));
+                for (int i = 1; i < track.Platforms.Count; i++)
+                {
+                    Assert.That(track.Platforms[i] - track.Platforms[i - 1], Is.EqualTo(18f).Within(1e-2f), $"gap {i} at speed {speed}");
+                }
+            }
+        }
+
+        [Test]
         public void APickupIsDueEveryPickupInterval()
         {
             var run = new RunTimeline(1f, 4f, new PlatformTrack(18f, 63f, 2f));
