@@ -33,7 +33,7 @@ public class Game_Manager : MonoBehaviour
 
     void Update()
     {
-        if (FindObjectOfType<Player>().IsAlive) 
+        if (FindFirstObjectByType<Player>().IsAlive) 
         {
             Vector3 cameraPos = new Vector3(transform.position.x, transform.position.y, playerPosition.position.z + - offSet.z);
             transform.position = cameraPos;

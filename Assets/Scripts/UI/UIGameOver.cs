@@ -14,7 +14,7 @@ public class UIGameOver : MonoBehaviour
 
     void Start()
     {
-        manager = FindObjectOfType<Scene_Manager>();
+        manager = FindFirstObjectByType<Scene_Manager>();
         //Connect with player prefabs
         SaveItems();
     }
