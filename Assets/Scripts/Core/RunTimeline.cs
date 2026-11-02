@@ -24,20 +24,22 @@ namespace GauntletRun.Core
 
         public void End() => Active = false;
 
-        /// <summary>Advances the run; reports the platforms and pickups to spawn this step.</summary>
+        /// <summary>Advances the run; reports the platforms and pickups to spawn this step. An ended run stays still.</summary>
         public void Tick(float dt, out int platformsAdded, out int pickupsAdded)
         {
-            if (Active)
+            platformsAdded = 0;
+            pickupsAdded = 0;
+            if (!Active)
             {
-                distanceTimer += dt;
-                while (distanceTimer >= distanceInterval)
-                {
-                    distanceTimer -= distanceInterval;
-                    Score.AddDistance(1);
-                }
+                return;
+            }
+            distanceTimer += dt;
+            while (distanceTimer >= distanceInterval)
+            {
+                distanceTimer -= distanceInterval;
+                Score.AddDistance(1);
             }
             platformsAdded = Track.Tick(dt);
-            pickupsAdded = 0;
             pickupTimer += dt;
             while (pickupTimer >= pickupInterval)
             {

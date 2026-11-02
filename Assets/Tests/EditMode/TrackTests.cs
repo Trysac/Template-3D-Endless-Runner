@@ -72,6 +72,22 @@ namespace GauntletRun.Core.Tests
         }
 
         [Test]
+        public void NothingSpawnsAfterTheRunEnds()
+        {
+            var run = new RunTimeline(1f, 4f, new PlatformTrack(18f, 63f, 2f));
+            run.Tick(10f, out _, out _);
+            int platforms = run.Track.Platforms.Count;
+            int distance = run.Score.Distance;
+            run.End();
+            run.Tick(20f, out int platformsAdded, out int pickupsAdded);
+            Assert.That(run.Active, Is.False);
+            Assert.That(platformsAdded, Is.EqualTo(0));
+            Assert.That(pickupsAdded, Is.EqualTo(0));
+            Assert.That(run.Track.Platforms.Count, Is.EqualTo(platforms));
+            Assert.That(run.Score.Distance, Is.EqualTo(distance));
+        }
+
+        [Test]
         public void APickupIsDueEveryPickupInterval()
         {
             var run = new RunTimeline(1f, 4f, new PlatformTrack(18f, 63f, 2f));
