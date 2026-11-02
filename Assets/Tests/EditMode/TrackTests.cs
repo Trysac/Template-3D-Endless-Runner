@@ -14,6 +14,14 @@ namespace GauntletRun.Core.Tests
         }
 
         [Test]
+        public void SteeringNeverLeavesTheRoad()
+        {
+            Assert.That(LateralMovement.Step(2.4f, 1f, 0.5f, 2f, 2.5f), Is.EqualTo(2.5f));
+            Assert.That(LateralMovement.Step(-2.4f, -1f, 0.5f, 2f, 2.5f), Is.EqualTo(-2.5f));
+            Assert.That(LateralMovement.Step(2.5f, 1f, 0.5f, 2f, 2.5f), Is.EqualTo(2.5f));
+        }
+
+        [Test]
         public void TheRoadAddsPlatformsFarAheadAndSlidesThemTowardsThePlayer()
         {
             var track = new PlatformTrack(18f, 63f, 2f);
