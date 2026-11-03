@@ -11,6 +11,16 @@ changing lanes, jumping barricades and sliding under spiked beams while the spee
 | ![Jumping over a spiked barricade](docs/screenshots/jump.png) | ![Sliding under a spiked beam](docs/screenshots/slide.png) |
 | ![The armoury shop with six knight skins](docs/screenshots/shop.png) | ![Results after a run, with a new best score](docs/screenshots/gameover.png) |
 
+## Play it
+
+- **In your browser:** [trysac.github.io/Template-3D-Endless-Runner](https://trysac.github.io/Template-3D-Endless-Runner/)
+- **On itch.io:** [trysac.itch.io/gauntlet-run](https://trysac.itch.io/gauntlet-run)
+- **Get the code:** fork this repository, or clone it:
+
+  ```bash
+  git clone https://github.com/Trysac/Template-3D-Endless-Runner.git
+  ```
+
 ## Run it
 
 1. Install **Unity 6000.3.27f1 (Unity 6 LTS)** with Unity Hub (add the Windows or Web build
