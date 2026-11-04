@@ -3,6 +3,8 @@
 A small 3D endless runner built with Unity: a knight dashes down a torch-lit castle corridor,
 changing lanes, jumping barricades and sliding under spiked beams while the speed keeps rising.
 
+![Gameplay](docs/media/gameplay.gif)
+
 ![The knight running the gauntlet under spiked beams, with coins ahead](docs/screenshots/run.png)
 
 | | |
