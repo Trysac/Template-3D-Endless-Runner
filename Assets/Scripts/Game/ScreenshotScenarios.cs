@@ -13,6 +13,8 @@ namespace GauntletRun.Game
     /// Without the -screenshot argument nothing is created, so normal runs and WebGL builds are
     /// unaffected. The same hook runs inside the editor (ProjectBuilder.CaptureScreenshots), which
     /// renders the camera and the HUD off screen and blends them, for machines that cannot run the player.
+    /// Adding <c>-frames N [-fps F]</c> saves N numbered frames per scenario at a fixed timestep
+    /// of 1/F seconds instead of one still (the README gameplay GIF uses <c>-scenario gameplay</c>).
     /// </summary>
     public sealed class ScreenshotScenarios : MonoBehaviour
     {
@@ -22,6 +24,8 @@ namespace GauntletRun.Game
 
         string folder;
         string[] scenarios;
+        int frames;
+        int fps = 15;
         RenderTexture sceneTarget;
         RenderTexture uiTarget;
 
@@ -36,6 +40,11 @@ namespace GauntletRun.Game
             var host = new GameObject(nameof(ScreenshotScenarios)).AddComponent<ScreenshotScenarios>();
             host.folder = target;
             host.scenarios = (Argument("-scenario") ?? DefaultScenarios).Split(',');
+            int.TryParse(Argument("-frames"), out host.frames);
+            if (int.TryParse(Argument("-fps"), out int fps) && fps > 0)
+            {
+                host.fps = fps;
+            }
         }
 
         IEnumerator Start()
@@ -53,6 +62,11 @@ namespace GauntletRun.Game
                 string scenario = raw.Trim();
                 UnityEngine.Random.InitState(scenario.Length * 97);
                 yield return Stage(director, scenario);
+                if (frames > 0)
+                {
+                    yield return CaptureSequence(scenario);
+                    continue;
+                }
                 Texture2D shot;
                 if (Application.isEditor)
                 {
@@ -107,6 +121,14 @@ namespace GauntletRun.Game
                     director.Simulate(330f);
                     director.Autopilot = true;
                     yield return new WaitForSecondsRealtime(2.5f);
+                    break;
+                case "gameplay":
+                    director.UseMemoryStore(Veteran(2));
+                    director.StartTrial(new TrackGenerator(21));
+                    director.Simulate(520f);
+                    director.Autopilot = true;
+                    yield return new WaitForSecondsRealtime(1.5f);
+                    director.Session.Run.Grant(PickupKind.Magnet);
                     break;
                 case "jump":
                 case "slide":
@@ -170,6 +192,30 @@ namespace GauntletRun.Game
                     Debug.LogWarning($"Unknown screenshot scenario '{scenario}'.");
                     break;
             }
+        }
+
+        /// <summary>Saves one frame every 1/fps seconds of game time while the autopilot keeps running.</summary>
+        IEnumerator CaptureSequence(string scenario)
+        {
+            Time.captureFramerate = fps;
+            for (int i = 0; i < frames; i++)
+            {
+                Texture2D shot;
+                if (Application.isEditor)
+                {
+                    yield return null;
+                    shot = CaptureOffscreen();
+                }
+                else
+                {
+                    yield return new WaitForEndOfFrame();
+                    shot = ScreenCapture.CaptureScreenshotAsTexture();
+                }
+                File.WriteAllBytes(Path.Combine(folder, $"{scenario}_{i:D4}.png"), shot.EncodeToPNG());
+                Destroy(shot);
+            }
+            Time.captureFramerate = 0;
+            Debug.Log($"Saved {frames} frames of {scenario} at {fps} fps");
         }
 
         static bool NearBeam(Run run)
